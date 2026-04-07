@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>i love cindy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0a;
+      --surface: #141414;
+      --border: rgba(255,255,255,0.08);
+    }
+
+    body {
+      background: var(--bg);
+      min-height: 100vh;
+      font-family: 'Space Mono', monospace;
+      color: #fff;
+      padding: 0;
+    }
+
+    header {
+      text-align: center;
+      padding: 48px 24px 0;
+    }
+
+    header p {
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 20px;
+    }
+
+    #display {
+      margin: 20px 24px 0;
+      min-height: 120px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: var(--surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      transition: border-color 0.3s;
+    }
+
+    #display:has(#cindy[data-active]) {
+      border-color: rgba(255,255,255,0.18);
+    }
+
+    #cindy {
+      text-align: center;
+      line-height: 1.2;
+      transition: all 0.3s cubic-bezier(.4,0,.2,1);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 10px;
+      padding: 20px 24px 40px;
+    }
+
+    .btn {
+      padding: 14px 10px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      transition: transform 0.12s, opacity 0.12s, box-shadow 0.12s;
+      line-height: 1.3;
+      text-align: center;
+      font-family: 'Space Mono', monospace;
+    }
+
+    .btn:hover {
+      opacity: 0.85;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    }
+
+    .btn:active {
+      transform: scale(0.95) translateY(0);
+    }
+
+    footer {
+      text-align: center;
+      padding: 0 24px 32px;
+      font-size: 11px;
+      color: rgba(255,255,255,0.15);
+      letter-spacing: 0.1em;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <p>a declaration in 30 fonts</p>
+  </header>
+
+  <div id="display">
+    <span id="cindy" style="font-size:18px; color:rgba(255,255,255,0.25); font-family:'Space Mono',monospace;">
+      click a button ↓
+    </span>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <footer>made with love &nbsp;·&nbsp; for cindy</footer>
+
+  <script>
+    const variants = [
+      { bg:"#EEEDFE", border:"#534AB7", text:"#3C3489", font:"Georgia, serif", size:"36px", weight:"400", label:"serif" },
+      { bg:"#E1F5EE", border:"#0F6E56", text:"#085041", font:"'Courier New', monospace", size:"28px", weight:"700", label:"mono" },
+      { bg:"#FAECE7", border:"#993C1D", text:"#712B13", font:"Impact, sans-serif", size:"38px", weight:"900", label:"impact" },
+      { bg:"#FBEAF0", border:"#993556", text:"#72243E", font:"'Palatino Linotype', serif", size:"30px", weight:"400", label:"palatino" },
+      { bg:"#E6F1FB", border:"#185FA5", text:"#0C447C", font:"'Arial Black', sans-serif", size:"26px", weight:"900", label:"black" },
+      { bg:"#EAF3DE", border:"#3B6D11", text:"#27500A", font:"'Trebuchet MS', sans-serif", size:"32px", weight:"400", label:"trebuchet" },
+      { bg:"#FAEEDA", border:"#854F0B", text:"#633806", font:"'Times New Roman', serif", size:"38px", weight:"700", label:"times" },
+      { bg:"#FCEBEB", border:"#A32D2D", text:"#791F1F", font:"'Comic Sans MS', cursive", size:"28px", weight:"400", label:"comic sans" },
+      { bg:"#F1EFE8", border:"#5F5E5A", text:"#2C2C2A", font:"'Lucida Console', monospace", size:"22px", weight:"400", label:"code" },
+      { bg:"#CECBF6", border:"#26215C", text:"#26215C", font:"Garamond, serif", size:"34px", weight:"400", label:"garamond" },
+      { bg:"#9FE1CB", border:"#04342C", text:"#04342C", font:"'Franklin Gothic Medium', sans-serif", size:"30px", weight:"400", label:"franklin" },
+      { bg:"#F0997B", border:"#4A1B0C", text:"#4A1B0C", font:"'Brush Script MT', cursive", size:"42px", weight:"400", label:"script" },
+      { bg:"#F4C0D1", border:"#4B1528", text:"#4B1528", font:"Verdana, sans-serif", size:"24px", weight:"700", label:"verdana" },
+      { bg:"#B5D4F4", border:"#042C53", text:"#042C53", font:"'Gill Sans', sans-serif", size:"32px", weight:"400", label:"gill sans" },
+      { bg:"#C0DD97", border:"#173404", text:"#173404", font:"'Rockwell', serif", size:"28px", weight:"700", label:"rockwell" },
+      { bg:"#FAC775", border:"#412402", text:"#412402", font:"'Optima', sans-serif", size:"34px", weight:"400", label:"optima" },
+      { bg:"#F7C1C1", border:"#501313", text:"#501313", font:"'Lucida Console', monospace", size:"22px", weight:"400", label:"lucida" },
+      { bg:"#D3D1C7", border:"#2C2C2A", text:"#2C2C2A", font:"'Helvetica Neue', Helvetica, sans-serif", size:"36px", weight:"300", label:"helvetica" },
+      { bg:"#AFA9EC", border:"#26215C", text:"#26215C", font:"'Didot', 'Bodoni MT', serif", size:"32px", weight:"400", label:"didot" },
+      { bg:"#5DCAA5", border:"#04342C", text:"#04342C", font:"'Century Gothic', sans-serif", size:"28px", weight:"500", label:"century gothic" },
+      { bg:"#D85A30", border:"#4A1B0C", text:"#fff", font:"'Baskerville', serif", size:"34px", weight:"400", label:"baskerville" },
+      { bg:"#D4537E", border:"#4B1528", text:"#fff", font:"'Arial Narrow', sans-serif", size:"32px", weight:"700", label:"narrow" },
+      { bg:"#378ADD", border:"#042C53", text:"#fff", font:"'Nunito', sans-serif", size:"30px", weight:"300", label:"light" },
+      { bg:"#639922", border:"#173404", text:"#fff", font:"'Papyrus', fantasy", size:"30px", weight:"400", label:"papyrus" },
+      { bg:"#BA7517", border:"#412402", text:"#fff", font:"'Copperplate Gothic', 'Copperplate', serif", size:"22px", weight:"400", label:"copperplate" },
+      { bg:"#E24B4A", border:"#501313", text:"#fff", font:"'Arial Rounded MT Bold', sans-serif", size:"30px", weight:"400", label:"rounded" },
+      { bg:"#534AB7", border:"#26215C", text:"#fff", font:"'Bodoni MT', 'Didot', serif", size:"36px", weight:"700", label:"bodoni bold" },
+      { bg:"#1D9E75", border:"#04342C", text:"#fff", font:"'URW Chancery L', cursive", size:"34px", weight:"400", label:"chancery" },
+      { bg:"#888780", border:"#2C2C2A", text:"#fff", font:"Tahoma, sans-serif", size:"28px", weight:"700", label:"tahoma" },
+      { bg:"#7F77DD", border:"#26215C", text:"#fff", font:"Georgia, serif", size:"32px", weight:"400", label:"georgia" },
+    ];
+
+    const grid = document.getElementById('grid');
+    const cindy = document.getElementById('cindy');
+
+    variants.forEach(v => {
+      const btn = document.createElement('button');
+      btn.className = 'btn';
+      btn.textContent = v.label;
+      btn.style.cssText = `background:${v.bg};border-color:${v.border};color:${v.text};font-family:${v.font};`;
+      btn.onclick = () => {
+        cindy.setAttribute('data-active', '1');
+        cindy.style.cssText = `font-family:${v.font};font-size:${v.size};font-weight:${v.weight};color:${v.border};`;
+        cindy.textContent = 'i love cindy';
+        document.getElementById('display').style.borderColor = v.border + '88';
+      };
+      grid.appendChild(btn);
+    });
+  </script>
+</body>
+</html>
